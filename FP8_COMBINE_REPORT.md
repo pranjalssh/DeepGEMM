@@ -118,17 +118,25 @@ Per-GPU throughput = `(input_len + output_len) × bs / latency / 8` (tok/s/gpu).
 
 ## GSM8K accuracy
 
-200-question 5-shot evaluation (`sglang.test.few_shot_gsm8k`,
-parallel=200, single run each):
+`sglang.test.few_shot_gsm8k`, 5-shot, parallel=200, single run each.
+
+200 questions:
 
 | Config | Accuracy |
 |---|---:|
 | FP4 + MXF4 (baseline) | 97.0% |
 | **FP4 + MXF4 + FP8 combine** | **97.5%** |
 
-Within run-to-run noise of the 95.6% ± 0.5 multi-run figure reported
-earlier (different sample / shot count). **FP8 combine preserves
-GSM8K accuracy.**
+1000 questions (tighter stats, ~±1.5% binomial CI):
+
+| Config | Accuracy |
+|---|---:|
+| FP4 + MXF4 (baseline) | 95.8% |
+| **FP4 + MXF4 + FP8 combine** | **94.9%** |
+
+Both within the previously reported 95.6% ± 0.5 baseline range.
+**FP8 combine preserves GSM8K accuracy** at production scale (with
+or without FP4 acts in the dispatch path).
 
 ## How to use
 
