@@ -111,12 +111,14 @@ signal of the same NVLink savings that show up at e2e.
 
 Per-GPU throughput = `(input_len + output_len) × bs / latency / 8` (tok/s/gpu).
 
-| batch | FP8 acts | FP8+combine | FP4+MXF4 | FP4+MXF4+combine | combine vs FP8 baseline |
-|-:|---:|---:|---:|---:|---:|
-| 512  | 6,417 | — | — | **7,526** | **+17.3%** |
-| 1024 | — | — | — | **8,806** | — |
-| 2048 | 9,096 | 9,158 | 9,814 | **9,962 (3-run avg)** | +0.7% / +9.5% |
-| 4096 | 9,639 | — | 10,418 | **10,622** | +10.2% |
+| batch | FP8 acts | FP8+combine | FP4+MXF4 | FP4+MXF4+combine | combine vs FP8 | combine vs FP4-MXF4 |
+|-:|---:|---:|---:|---:|---:|---:|
+| 512  | 6,417 | — | — | **7,552 ± 9 (3 runs)** | **+17.7%** | — |
+| 1024 | — | — | — | **8,806** | — | — |
+| 2048 | 9,096 | 9,158 | 9,814 | **9,993 ± 4 (3 runs)** | **+9.9%** | +1.8% |
+| 4096 | 9,639 | — | 10,418 | **10,622** | +10.2% | +2.0% |
+
+Run-to-run variance < 0.2%.
 
 ## GSM8K accuracy
 
