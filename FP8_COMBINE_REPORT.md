@@ -66,18 +66,20 @@ measurement on real workloads).
 `tests/test_mega_moe_fp8_combine_sentinel.py`: end-to-end y rel-RMSE
 between FP8-combine and BF16-combine on identical inputs.
 
-| Shape | DG_USE_FP4_ACTS | rel-RMSE | Verdict |
-|---|---|---:|---|
-| Smoke (h=1024, ie=512, E=8, K=2, ntok=256) | 0 | 0.027 | PASS |
-| Smoke | 1 (+MXF4) | 0.027 | PASS |
-| Production (h=7168, ie=3072, E=384, K=6, ntok=4096, 8-rank) | 0 | 0.027 | PASS |
-| Production | 1 (+MXF4) | 0.027 | PASS |
+| Shape | ntok | DG_USE_FP4_ACTS | rel-RMSE | Verdict |
+|---|---:|---|---:|---|
+| Smoke (h=1024, ie=512, E=8, K=2) | 256 | 0 | 0.027 | PASS |
+| Smoke | 256 | 1 (+MXF4) | 0.027 | PASS |
+| Production (h=7168, ie=3072, E=384, K=6, 8-rank) | 1024 | 0 | 0.027 | PASS |
+| Production | 2048 | 1 (+MXF4) | 0.027 | PASS |
+| Production | 4096 | 0 | 0.027 | PASS |
+| Production | 4096 | 1 (+MXF4) | 0.027 | PASS |
 
 Target ≤ 0.30 (= 30% rel-RMSE — well above the FP8 quant chain noise
 floor of ~2-3% per cell after sqrt(K=6) reduction).
 
 Independence confirmed: FP8 combine quant noise is the same with or
-without FP4 acts.
+without FP4 acts, stable from 256 to 4096 tokens.
 
 ## Single-GPU iso bench (8x B300, EP8)
 
